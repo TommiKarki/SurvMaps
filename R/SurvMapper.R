@@ -1,10 +1,8 @@
 #' Map your prepared data with SurvMapper
 #'
-#' Creates surveillance chloropleth maps, includes EU/EEA SpatialPolygonDataframe to plot EU/EEA country data. 
-#' Requires data file with defined GEO_ID variable in specific format, as well as spatial data in pre-defined format.
-#' Note that due to the use of grid for legend and the small inlets for non-visible countries, mapping is not superswift 
-#' and elements appear one by one to the graph. Also, the alignment of the legend, as well as fontsize, depends on the 
-#' width x height. Current ideal dimensions approximately 1000x680.
+#' Creates surveillance chloropleth maps. Note that due to the use of grid for legend and the small inlets for non-visible 
+#' countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
+#' as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
 #'
 #' @param data Your spatial data that you want to map, currently only chloropleth available
 #' @param fills Your column/variable(s) that your want to map. Preferably a factor in defined order. 
