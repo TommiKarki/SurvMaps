@@ -8,10 +8,10 @@
 #' @param isEEA Your isEEA variable, defaults to 'isEEA'
 #' @param CNTR_ID Your CNTR_ID variable, defaults to 'CNTR_ID'
 #' @param Legend_titles Legend title(s). More than one if more than one fills.
-#' @param col_scale Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" gray.
+#' @param col_scale Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" grey.
 #' More than one if more than one fills.
 #' @param fill_levels The order to map the levels in fills; only works with one fills variable.
-#' @param reverse_colours Reverse the order of the colours scale. Note that the last category is always "No data" gray.
+#' @param reverse_colours Reverse the order of the colour scale. Note that the last category is always "No data" grey.
 #' @keywords map
 #' @export
 #' @examples
@@ -86,15 +86,15 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
     p1 <- ggplot(data = data, aes_string(x = "long", y = "lat", fill = fill)) +
       geom_map(data = data, map = data,
                aes_string(map_id = "id"),
-               color = rgb2(63,63,63), size = 0.2) +
+               color = SurvColors("grey", grey_shade="dark"), size = 0.2) +
       theme_map() +
       coord_map("azequalarea", xlim = c(-24, 44),ylim = c(34, 70),
                 orientation = c(52,10,0)) +
       theme(legend.position="none") +
       geom_map(data = data[data[["isEEA"]]==0,], map = data[data[["isEEA"]]==0,],
                aes_string(map_id = "id"),
-               fill = rgb2(229,229,229),
-               color = rgb2(63,63,63), size = 0.2) 
+               fill = SurvColors("grey", grey_shade="light"),
+               color = SurvColors("grey", grey_shade="dark"), size = 0.2) 
     if(length(levels(data[[fill]])) == 2){
       p1 <- p1 + scale_fill_manual(values = map_cols[1:2])
     }else if(length(levels(data[[fill]])) == 3){
@@ -117,12 +117,12 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
     mp_lu <- ggplot(data = mymap_lu_mt, aes_string(x = "long", y = "lat", fill = fill)) +
       geom_map(data = mymap_lu_mt, map = mymap_lu_mt,
                aes_string(map_id = "id"),
-               color = rgb2(63,63,63), size = 0.5) +
+               color = SurvColors("grey", grey_shade="dark"), size = 0.5) +
       theme_map() +
       coord_map("azequalarea", xlim = c(5.59,6.61),ylim = c(49.3, 50.35)) +
       labs(x=NULL, y=NULL) +
       theme(legend.position = "none", plot.margin=unit(c(0,0,0,0),"mm"),
-            panel.border = element_rect(fill = NA, colour = rgb2(63,63,63), 
+            panel.border = element_rect(fill = NA, colour = SurvColors("grey", grey_shade="dark"), 
                                         size = 0.5))
     if(length(levels(data[[fill]])) == 2){
       mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:2])
@@ -149,12 +149,12 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
     mp_mt <- ggplot(data = mymap_lu_mt, aes_string(x = "long", y = "lat", fill = fill)) +
       geom_map(data = mymap_lu_mt, map = mymap_lu_mt,
                aes_string(map_id = "id"),
-               color = rgb2(63,63,63), size = 0.5) +
+               color = SurvColors("grey", grey_shade="dark"), size = 0.5) +
       theme_map() +
       coord_map("azequalarea",xlim = c(14.1175,14.6375),ylim = c(35.58, 36.32)) +
       labs(x=NULL, y=NULL) +
       theme(legend.position = "none", plot.margin=unit(c(0,0,0,0),"mm"),
-            panel.border = element_rect(fill = NA, colour = rgb2(63,63,63), 
+            panel.border = element_rect(fill = NA, colour = SurvColors("grey", grey_shade="dark"), 
                                         size = 0.5))
     if(length(levels(data[[fill]])) == 2){
       mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:2])
@@ -186,13 +186,13 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
     grid.rect(width = 0.055, height = 0.025, 
               x = xpos+0.002, y=0.9, just = "left", 
               gp = gpar(fill=map_cols[1],
-                        col = rgb2(63,63,63),
+                        col = SurvColors("grey", grey_shade="dark"),
                         lwd = 0.2))
     
     grid.rect(width = 0.055, height = 0.025, 
               x = xpos+0.002, y=0.865, just = "left", 
               gp = gpar(fill=map_cols[2],
-                        col = rgb2(63,63,63),
+                        col = SurvColors("grey", grey_shade="dark"),
                         lwd = 0.2))
     
     # Legend title
@@ -215,7 +215,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       grid.rect(width = 0.055, height = 0.025, 
                 x = xpos+0.002, y=0.83, just = "left", 
                 gp = gpar(fill=map_cols[3],
-                          col = rgb2(63,63,63),
+                          col = SurvColors("grey", grey_shade="dark"),
                           lwd = 0.2))
       
       grid.text(paste(levels(data[[fill]])[3]), x=xtextpos, y=0.83, just = "left", vp = v1, 
@@ -229,7 +229,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       grid.rect(width = 0.055, height = 0.025, 
                 x = xpos+0.002, y=0.795, just = "left", 
                 gp = gpar(fill=map_cols[4],
-                          col = rgb2(63,63,63),
+                          col = SurvColors("grey", grey_shade="dark"),
                           lwd = 0.2))
       
       grid.text(paste(levels(data[[fill]])[4]), x=xtextpos, y=0.795, just = "left", vp = v1, 
@@ -242,7 +242,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       grid.rect(width = 0.055, height = 0.025, 
                 x = xpos+0.002, y=0.76, just = "left", 
                 gp = gpar(fill=map_cols[5],
-                          col = rgb2(63,63,63),
+                          col = SurvColors("grey", grey_shade="dark"),
                           lwd = 0.2))
       
       
@@ -257,7 +257,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       grid.rect(width = 0.055, height = 0.025, 
                 x = xpos+0.002, y=0.725, just = "left", 
                 gp = gpar(fill=map_cols[6],
-                          col = rgb2(63,63,63),
+                          col = SurvColors("grey", grey_shade="dark"),
                           lwd = 0.2))
       
       grid.text(paste(levels(data[[fill]])[6]), x=xtextpos, y=0.725, just = "left", vp = v1, 
@@ -270,7 +270,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       grid.rect(width = 0.055, height = 0.025, 
                 x = xpos+0.002, y=0.69, just = "left", 
                 gp = gpar(fill=map_cols[7],
-                          col = rgb2(63,63,63),
+                          col = SurvColors("grey", grey_shade="dark"),
                           lwd = 0.2))
       
       grid.text(paste(levels(data[[fill]])[7]), x=xtextpos, y=0.69, just = "left", vp = v1, 
@@ -283,7 +283,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       grid.rect(width = 0.055, height = 0.025, 
                 x = xpos+0.002, y=0.655, just = "left", 
                 gp = gpar(fill=map_cols[8],
-                          col = rgb2(63,63,63),
+                          col = SurvColors("grey", grey_shade="dark"),
                           lwd = 0.2))
       
       grid.text(paste(levels(data[[fill]])[8]), x=xtextpos, y=0.655, just = "left", vp = v1, 
