@@ -4,9 +4,9 @@
 \alias{SurvMapper}
 \title{Map your prepared data with SurvMapper}
 \usage{
-SurvMapper(data, fills, long = long, lat = lat, id = id,
-  isEEA = isEEA, CNTR_ID = CNTR_ID, Legend_titles, col_scale,
-  fill_levels = NULL, reverse_colours = FALSE)
+SurvMapper(data, fills, long = long, lat = lat, id = id, isEEA = isEEA,
+  CNTR_ID = CNTR_ID, Legend_titles, col_scale, fill_levels = NULL,
+  reverse_colours = FALSE)
 }
 \arguments{
 \item{data}{Your spatial data that you want to map, currently only chloropleth available}
@@ -25,12 +25,12 @@ SurvMapper(data, fills, long = long, lat = lat, id = id,
 
 \item{Legend_titles}{Legend title(s). More than one if more than one fills.}
 
-\item{col_scale}{Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" gray.
+\item{col_scale}{Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" grey.
 More than one if more than one fills.}
 
 \item{fill_levels}{The order to map the levels in fills; only works with one fills variable.}
 
-\item{reverse_colours}{Reverse the order of the colours scale. Note that the last category is always "No data" gray.}
+\item{reverse_colours}{Reverse the order of the colour scale. Note that the last category is always "No data" grey.}
 }
 \description{
 Map your prepared data with SurvMapper
