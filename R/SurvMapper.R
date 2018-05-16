@@ -1,4 +1,4 @@
-#' Prepare your data and spatial data for SurvMapper
+#' Map your prepared data with SurvMapper
 #'
 #' @param data Your spatial data that you want to map, currently only chloropleth available
 #' @param fills Your column/variable(s) that your want to map. Preferably a factor in defined order. 
@@ -7,11 +7,11 @@
 #' @param id Your id variable, defaults to 'id'
 #' @param isEEA Your isEEA variable, defaults to 'isEEA'
 #' @param CNTR_ID Your CNTR_ID variable, defaults to 'CNTR_ID'
-#' @param Legend_titles Legend title(s). More than one if more than fills.
-#' @param col_scale Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" green.
-#' More than one if more than fills.
+#' @param Legend_titles Legend title(s). More than one if more than one fills.
+#' @param col_scale Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" gray.
+#' More than one if more than one fills.
 #' @param fill_levels The order to map the levels in fills; only works with one fills variable.
-#' @param reverse_colours Reverse the order of the colours scale. Note that the last category is always "No data" green.
+#' @param reverse_colours Reverse the order of the colours scale. Note that the last category is always "No data" gray.
 #' @keywords map
 #' @export
 #' @examples
@@ -43,7 +43,7 @@
 #' # e.g. level order is good to be predefined if plotting several columns. And depends on graphical device (e.g. recording)
 #' SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_titles = c("Testing this", "And also this"),
 #'        col_scale = c("blue", "qualitative"))
-SurvMapper <- function(data=data, fills, long = long, lat = lat, id = id, isEEA = isEEA, CNTR_ID = CNTR_ID,
+SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isEEA, CNTR_ID = CNTR_ID,
                     Legend_titles, col_scale,
                     fill_levels = NULL, reverse_colours=FALSE){
   
