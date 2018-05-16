@@ -58,9 +58,6 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       data[[fill]] <- factor(data[[fill]])
     }else{
       data[[fill]] <- factor(data[[fill]], levels = fill_levels)}
-    rgb2 <- function(r=x, g=NULL, b=NULL, maxColorValue = 255){
-      val <- rgb(r, g, b, maxColorValue = maxColorValue)
-      return(val)}
     if(colour_scale=="green"){
       map_cols <- SurvColors(col_scale = "green", n=length(levels(data[[fill]]))-1)
       map_cols[length(map_cols)+1] <- SurvColors("grey", grey_shade = "mediumlight")
