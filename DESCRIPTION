@@ -7,7 +7,6 @@ Depends: R (>= 3.4.0),
 		grid,
 		ggplot2,
 		ggthemes,
-		sp,
 		broom
 License: What license is it under?
 Encoding: UTF-8
