@@ -2,9 +2,9 @@
 % Please edit documentation in R/SurvMapper.R
 \name{SurvMapper}
 \alias{SurvMapper}
-\title{Prepare your data and spatial data for SurvMapper}
+\title{Map your prepared data with SurvMapper}
 \usage{
-SurvMapper(data = data, fills, long = long, lat = lat, id = id,
+SurvMapper(data, fills, long = long, lat = lat, id = id,
   isEEA = isEEA, CNTR_ID = CNTR_ID, Legend_titles, col_scale,
   fill_levels = NULL, reverse_colours = FALSE)
 }
@@ -23,17 +23,17 @@ SurvMapper(data = data, fills, long = long, lat = lat, id = id,
 
 \item{CNTR_ID}{Your CNTR_ID variable, defaults to 'CNTR_ID'}
 
-\item{Legend_titles}{Legend title(s). More than one if more than fills.}
+\item{Legend_titles}{Legend title(s). More than one if more than one fills.}
 
-\item{col_scale}{Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" green.
-More than one if more than fills.}
+\item{col_scale}{Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" gray.
+More than one if more than one fills.}
 
 \item{fill_levels}{The order to map the levels in fills; only works with one fills variable.}
 
-\item{reverse_colours}{Reverse the order of the colours scale. Note that the last category is always "No data" green.}
+\item{reverse_colours}{Reverse the order of the colours scale. Note that the last category is always "No data" gray.}
 }
 \description{
-Prepare your data and spatial data for SurvMapper
+Map your prepared data with SurvMapper
 }
 \examples{
 
