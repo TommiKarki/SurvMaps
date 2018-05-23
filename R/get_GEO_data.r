@@ -8,7 +8,7 @@
 #' @param FIELDS = Which "additional" field to retrieve from the hybrid layer, defaults to "GEO_ID". 
 #' "GEO_NAME" also available.
 #' @param isValid isValid=1 removes the obsolete NUTS regions.
-#' @author Tommi Karki and Silviu Ionescu.
+#' @author Tommi Karki; with thanks to Silviu Ionescu.
 #' @export
 #' @examples
 #' # get EU/EEA country polygons
