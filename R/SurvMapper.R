@@ -3,6 +3,7 @@
 #' Creates surveillance chloropleth maps. Note that due to the use of grid for legend and the small inlets for non-visible 
 #' countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
 #' as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
+#' Currently uses 'Arial' font, to be updated to 'Tahoma'.
 #'
 #' @param data Your spatial data that you want to map, currently only chloropleth available
 #' @param fills Your column/variable(s) that your want to map. Preferably a factor in defined order. 
@@ -17,6 +18,7 @@
 #' @param fill_levels The order to map the levels in fills; only works with one fills variable.
 #' @param reverse_colours Reverse the order of the colour scale. Note that the last category is always "No data" grey.
 #' @keywords map
+#' @author Tommi Karki
 #' @export
 #' @examples
 #' 
@@ -36,10 +38,10 @@
 #'
 #' # Chloropleth map with some additional options
 #' SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this", 
-#'        fill_levels = c("Optimal",
-#'                        "Good",
-#'                        "Poor", 
-#'                        "Very poor",
+#'        fill_levels = c("Dummy1",
+#'                        "Dummy2",
+#'                        "Dummy3", 
+#'                        "Dummy4",
 #'                        "No data"),
 #'        col_scale = "red", reverse_colours = TRUE)
 #'
