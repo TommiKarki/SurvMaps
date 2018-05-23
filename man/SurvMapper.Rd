@@ -33,9 +33,10 @@ More than one if more than one fills.}
 \item{reverse_colours}{Reverse the order of the colour scale. Note that the last category is always "No data" grey.}
 }
 \description{
-Creates surveillance chloropleth maps. Note that due to the use of grid for legend and the small inlets for non-visible countries,
-mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, as well as fontsize 
-depends on the width x height. Current ideal dimensions approximately 1000x680.
+Creates surveillance chloropleth maps. Note that due to the use of grid for legend and the small inlets for non-visible 
+countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
+as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
+Currently uses 'Arial' font, to be updated to 'Tahoma'.
 }
 \examples{
 
@@ -55,10 +56,10 @@ SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this", col_sca
 
 # Chloropleth map with some additional options
 SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this", 
-       fill_levels = c("Optimal",
-                       "Good",
-                       "Poor", 
-                       "Very poor",
+       fill_levels = c("Dummy1",
+                       "Dummy2",
+                       "Dummy3", 
+                       "Dummy4",
                        "No data"),
        col_scale = "red", reverse_colours = TRUE)
 
@@ -66,5 +67,8 @@ SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this",
 # e.g. level order is good to be predefined if plotting several columns. And depends on graphical device (e.g. recording)
 SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_titles = c("Testing this", "And also this"),
        col_scale = c("blue", "qualitative"))
+}
+\author{
+Tommi Karki
 }
 \keyword{map}
