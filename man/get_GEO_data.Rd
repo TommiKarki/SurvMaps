@@ -33,5 +33,5 @@ plot(points, col = "red")
 plot(plgs, add = TRUE)
 }
 \author{
-Tommi Karki and Silviu Ionescu.
+Tommi Karki; with thanks to Silviu Ionescu.
 }
