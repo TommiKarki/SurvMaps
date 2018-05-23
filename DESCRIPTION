@@ -1,15 +1,18 @@
 Package: SurvMaps
-Title: Surveillance chloropleth maps
+Title: Get geo data from ECDC GIS server, prepare geodata for ggplot2, EU/EEA survmapper
 Version: 0.0.0.9000
-Authors@R: person("Tommi", "Karki", email = "tommi.p.karki@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Tommi", "Karki", email = "tommi.karki@ecdc.europa.eu", role = c("aut", "cre"))
+Description: Get geo data from ECDC GIS server, prepare geodata for ggplot2, EU/EEA survmapper.
 Depends: R (>= 3.4.0),
-		grid,
-		ggplot2,
-		ggthemes,
-		sp,
-		mapproj,
-		broom
+	ggplot2,
+	grid,
+	sp,
+	broom,
+	httr,
+	geojson,
+	geojsonio,
+	ggthemes,
+	mapproj
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

@@ -3,3 +3,4 @@
 export(PrepMap)
 export(SurvColors)
 export(SurvMapper)
+export(get_GEO_data)
