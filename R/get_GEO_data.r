@@ -3,10 +3,11 @@
 #' This function gets the geodata from ECDC GIS server into R SpatialpolygonsDataFrame or SpatialpointsDataFrame. 
 #' Gives a warning when closing the connection.
 #' @param layer Select the layer for Hybrid Layer service: 0 for Points, 1 for Polygons.
-#' @param STAT_LEVL Which values: 0,10=Country level(0 for EU/EEA and candidates, 10 for the rest of world); 
-#' 1,2,3 = NUTS levels; 11,12 = GAUL levels; 21,22,23,24 = GADM levels. Defaults to 0 for EU/EEA.
+#' @param STAT_LEVL Which data level; 0 for EU/EEA and candidate country level, 10 for the rest of world country level. 
+#' 1,2,3 = NUTS levels; 11,12 = GAUL levels; 21,22,23,24 = GADM levels. Defaults to 0 for EU/EEA. Give a single value or vector.
 #' @param FIELDS = Which "additional" field to retrieve from the hybrid layer, defaults to "GEO_ID", for additional
-#' FIELDS to retrieve from the hybrid layer use a string e.g FIELDS = "GEO_ID,GEO_NAME,CONTINENT".
+#' FIELDS to retrieve from the hybrid layer give a character vector of field names. Field names available from:
+#' https://gis.ecdc.europa.eu/public/rest/services/UtilitiesServices/EMMA_GoMap_GC_HL_V1_3_WebMerc/MapServer/
 #' @param isValid isValid=1 removes the obsolete NUTS regions.
 #' @author Tommi Karki.
 #' @export
@@ -20,21 +21,22 @@
 #' # use the geodata
 #' plot(points, col = "red")
 #' plot(plgs, add = TRUE)
+#' 
+#' # get all the world country polygons and some additional fields
+#' plgs <- get_GEO_data(layer = 1, FIELDS = c("GEO_ID", "GEO_NAME", "CONTINENT"), STAT_LEVL=c(0,10))
 
 get_GEO_data <- function(layer,
                               STAT_LEVL = c(0),
                               FIELDS = "GEO_ID",
                               isValid=1){
-require(httr)
-require(geojsonio)
-require(geojson)
 
 # ECDC GIS server url
 url_ecdcGisSrv <- "https://gis.ecdc.europa.eu/1/query"
 url_srvcLocation <- 
   "public/rest/services/UtilitiesServices/EMMA_GoMap_GC_HL_V1_3_WebMerc/MapServer"
 url_layer <- layer
-url_outFields <- FIELDS
+url_outFields <- paste(FIELDS, collapse= ",")
+STAT_LEVL <- paste(STAT_LEVL, collapse = ",")
 url_whereClause <- paste0("isValid=",isValid, " AND STAT_LEVL IN (", STAT_LEVL,")")
 
 # The full url with the layer and where-clause
