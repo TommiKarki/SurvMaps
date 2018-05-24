@@ -5,10 +5,10 @@
 #' @param layer Select the layer for Hybrid Layer service: 0 for Points, 1 for Polygons.
 #' @param STAT_LEVL Which values: 0,10=Country level(0 for EU/EEA and candidates, 10 for the rest of world); 
 #' 1,2,3 = NUTS levels; 11,12 = GAUL levels; 21,22,23,24 = GADM levels. Defaults to 0 for EU/EEA.
-#' @param FIELDS = Which "additional" field to retrieve from the hybrid layer, defaults to "GEO_ID". 
-#' "GEO_NAME" also available.
+#' @param FIELDS = Which "additional" field to retrieve from the hybrid layer, defaults to "GEO_ID", for additional
+#' FIELDS to retrieve from the hybrid layer use a string e.g FIELDS = "GEO_ID,GEO_NAME,CONTINENT".
 #' @param isValid isValid=1 removes the obsolete NUTS regions.
-#' @author Tommi Karki; with thanks to Silviu Ionescu.
+#' @author Tommi Karki.
 #' @export
 #' @examples
 #' # get EU/EEA country polygons
