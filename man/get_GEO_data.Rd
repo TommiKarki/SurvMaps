@@ -9,11 +9,12 @@ get_GEO_data(layer, STAT_LEVL = c(0), FIELDS = "GEO_ID", isValid = 1)
 \arguments{
 \item{layer}{Select the layer for Hybrid Layer service: 0 for Points, 1 for Polygons.}
 
-\item{STAT_LEVL}{Which values: 0,10=Country level(0 for EU/EEA and candidates, 10 for the rest of world); 
-1,2,3 = NUTS levels; 11,12 = GAUL levels; 21,22,23,24 = GADM levels. Defaults to 0 for EU/EEA.}
+\item{STAT_LEVL}{Which data level; 0 for EU/EEA and candidate country level, 10 for the rest of world country level. 
+1,2,3 = NUTS levels; 11,12 = GAUL levels; 21,22,23,24 = GADM levels. Defaults to 0 for EU/EEA. Give a single value or vector.}
 
 \item{FIELDS}{= Which "additional" field to retrieve from the hybrid layer, defaults to "GEO_ID", for additional
-FIELDS to retrieve from the hybrid layer use a string e.g FIELDS = "GEO_ID,GEO_NAME,CONTINENT".}
+FIELDS to retrieve from the hybrid layer give a character vector of field names. Field names available from:
+https://gis.ecdc.europa.eu/public/rest/services/UtilitiesServices/EMMA_GoMap_GC_HL_V1_3_WebMerc/MapServer/}
 
 \item{isValid}{isValid=1 removes the obsolete NUTS regions.}
 }
@@ -31,6 +32,9 @@ points <- get_GEO_data(layer = 0)
 # use the geodata
 plot(points, col = "red")
 plot(plgs, add = TRUE)
+
+# get all the world country polygons and some additional fields
+plgs <- get_GEO_data(layer = 1, FIELDS = c("GEO_ID", "GEO_NAME", "CONTINENT"), STAT_LEVL=c(0,10))
 }
 \author{
 Tommi Karki.
