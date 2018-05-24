@@ -2,17 +2,17 @@
 % Please edit documentation in R/PrepMap.R
 \name{PrepMap}
 \alias{PrepMap}
-\title{Prepare your data and spatial data for SurvMapper}
+\title{Prepare your data and spatial data for SurvMapper (ggplot)}
 \usage{
 PrepMap(data, geo)
 }
 \arguments{
 \item{data}{Your data that you want to include in the map, including the variable GEO_ID with the correct codes}
 
-\item{geo}{Your geometry data, currently only works for SpatialPolygonDataframes (see the EU/EEA)}
+\item{geo}{Your geometry data, either SpatialPolygonsDataFrame or SpatialPointsDataFrame with variable GEO_ID}
 }
 \description{
-Prepare your data and spatial data for SurvMapper
+Prepare your data and spatial data for SurvMapper (ggplot)
 }
 \examples{
 
