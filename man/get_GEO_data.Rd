@@ -12,8 +12,8 @@ get_GEO_data(layer, STAT_LEVL = c(0), FIELDS = "GEO_ID", isValid = 1)
 \item{STAT_LEVL}{Which values: 0,10=Country level(0 for EU/EEA and candidates, 10 for the rest of world); 
 1,2,3 = NUTS levels; 11,12 = GAUL levels; 21,22,23,24 = GADM levels. Defaults to 0 for EU/EEA.}
 
-\item{FIELDS}{= Which "additional" field to retrieve from the hybrid layer, defaults to "GEO_ID". 
-"GEO_NAME" also available.}
+\item{FIELDS}{= Which "additional" field to retrieve from the hybrid layer, defaults to "GEO_ID", for additional
+FIELDS to retrieve from the hybrid layer use a string e.g FIELDS = "GEO_ID,GEO_NAME,CONTINENT".}
 
 \item{isValid}{isValid=1 removes the obsolete NUTS regions.}
 }
@@ -33,5 +33,5 @@ plot(points, col = "red")
 plot(plgs, add = TRUE)
 }
 \author{
-Tommi Karki; with thanks to Silviu Ionescu.
+Tommi Karki.
 }
