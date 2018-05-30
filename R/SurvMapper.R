@@ -1,18 +1,17 @@
 #' Map your prepared data with SurvMapper
 #'
-#' Creates surveillance chloropleth maps. Note that due to the use of grid for legend and the small inlets for non-visible 
+#' Creates surveillance chloropleth maps for data prepared with PrepMap. Note that due to the use of grid for legend and the small inlets for non-visible 
 #' countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
 #' as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
 #' Currently uses 'Arial' font, to be updated to 'Tahoma'.
 #'
-#' @param data Your spatial data that you want to map, currently only chloropleth available
+#' @param data Your spatial data that you want to map, prepared to work with ggplot2, currently only chloropleth available
 #' @param fills Your column/variable(s) that your want to map. Preferably a factor in defined order. 
 #' @param long Your longitude variable, defaults to 'long'
 #' @param lat Your latitude variable, defaults to 'lat'
-#' @param id Your id variable, defaults to 'id'
-#' @param isEEA Your isEEA variable, defaults to 'isEEA'
-#' @param CNTR_ID Your CNTR_ID variable, defaults to 'CNTR_ID'
-#' @param Legend_titles Legend title(s). More than one if more than one fills.
+#' @param id Your spatial id variable, defaults to 'id'
+#' @param bground Your variable with 1/0 to classify the grey background (0's included only in lightgrey), defaults to 'isEEA'
+#' @param Legend_title Legend title(s). More than one if more than one fills.
 #' @param col_scale Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" grey.
 #' More than one if more than one fills.
 #' @param fill_levels The order to map the levels in fills; only works with one fills variable.
@@ -24,8 +23,8 @@
 #' 
 #' # load the included dummy data
 #' load(system.file("extdata", "dummy_data.rds", package = "SurvMaps"))
-#' # load the included EU/EEA SpatialPolygonsDataframe (includes Asia and Africa for background)
-#' load(system.file("extdata", "EU_AFR_AS_plgs.rds", package = "SurvMaps"))
+#' # Get the EU/EEA and candidate country SpatialPolygonsDataframe, including a variable "isEEA"
+#' plg_map <- get_GEO_data(layer = 1, STAT_LEVL = c(0), FIELDS = c("isEEA", "GEO_ID"))
 #' 
 #' # Prepare the data for SurvMapper with PrepMap
 #' mymap <- PrepMap(data = dummy_data , geo = plg_map)
@@ -34,10 +33,10 @@
 #' dev.new(width=11.8,height=8, noRStudioGD = TRUE)
 #' 
 #' # Simple chloropleth map
-#' SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this", col_scale = "red")
+#' SurvMapper(mymap, fills ="Dummy_status", Legend_title = "Testing this", col_scale = "red")
 #'
 #' # Chloropleth map with some additional options
-#' SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this", 
+#' SurvMapper(mymap, fills ="Dummy_status", Legend_title = "Testing this", 
 #'        fill_levels = c("Dummy1",
 #'                        "Dummy2",
 #'                        "Dummy3", 
@@ -47,17 +46,17 @@
 #'
 #' # Note that you can map at once several columns, but all options are not yet available for this scenario - 
 #' # e.g. level order is good to be predefined if plotting several columns. And depends on graphical device (e.g. recording)
-#' SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_titles = c("Testing this", "And also this"),
+#' SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_title = c("Testing this", "And also this"),
 #'        col_scale = c("blue", "qualitative"))
-SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isEEA, CNTR_ID = CNTR_ID,
-                    Legend_titles, col_scale,
+SurvMapper <- function(data, fills, long = long, lat = lat, id = id, bground = isEEA,
+                    Legend_title, col_scale,
                     fill_levels = NULL, reverse_colours=FALSE){
-  
+  bground <- deparse(substitute(bground))
   windowsFonts(Arial = windowsFont("TT Arial"))
   require(SurvColors)
   for(i in fills){
     fill <- i
-    Legend_title <- Legend_titles[fills==i]
+    Leg_title <- Legend_title[fills==i]
     colour_scale <- col_scale[fills==i]
     
     if(is.null(fill_levels)){
@@ -94,7 +93,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
       coord_map("azequalarea", xlim = c(-24, 44),ylim = c(34, 70),
                 orientation = c(52,10,0)) +
       theme(legend.position="none") +
-      geom_map(data = data[data[["isEEA"]]==0,], map = data[data[["isEEA"]]==0,],
+      geom_map(data = data[data[[bground]]==0,], map = data[data[[bground]]==0,],
                aes_string(map_id = "id"),
                fill = SurvColors("grey", grey_shade="light"),
                color = SurvColors("grey", grey_shade="dark"), size = 0.2) 
@@ -115,8 +114,8 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
     }
     
     print("Creating Luxembourg inset map!")
-    mymap_lu_mt <- data[data[["isEEA"]]==1,]
-    # mymap_lu_mt <- data[data[["CNTR_ID"]]%in%c("LU", "MT", "FR", "BE", "DE"),]
+    mymap_lu_mt <- data[data[[bground]]==1,]
+    # mymap_lu_mt <- data[data[["GEO_ID"]]%in%c("LU", "MT", "FR", "BE", "DE"),]
     mp_lu <- ggplot(data = mymap_lu_mt, aes_string(x = "long", y = "lat", fill = fill)) +
       geom_map(data = mymap_lu_mt, map = mymap_lu_mt,
                aes_string(map_id = "id"),
@@ -199,7 +198,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, isEEA = isE
                         lwd = 0.2))
     
     # Legend title
-    grid.text(Legend_title, x=xpos+0.002, y=0.93, just = "left", vp = v1, 
+    grid.text(Leg_title, x=xpos+0.002, y=0.93, just = "left", vp = v1, 
               gp = gpar(fontsize = 9, fontfamily = "Arial",
                         cex = textcex))
     
