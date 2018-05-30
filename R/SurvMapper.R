@@ -37,10 +37,10 @@
 #'
 #' # Chloropleth map with some additional options
 #' SurvMapper(mymap, fills ="Dummy_status", Legend_title = "Testing this", 
-#'        fill_levels = c("Dummy1",
-#'                        "Dummy2",
-#'                        "Dummy3", 
-#'                        "Dummy4",
+#'        fill_levels = c("Dummy4",
+#'                        "Dummy3",
+#'                        "Dummy2", 
+#'                        "Dummy1",
 #'                        "No data"),
 #'        col_scale = "red", reverse_colours = TRUE)
 #'
