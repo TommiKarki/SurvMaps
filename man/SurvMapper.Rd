@@ -4,12 +4,12 @@
 \alias{SurvMapper}
 \title{Map your prepared data with SurvMapper}
 \usage{
-SurvMapper(data, fills, long = long, lat = lat, id = id, isEEA = isEEA,
-  CNTR_ID = CNTR_ID, Legend_titles, col_scale, fill_levels = NULL,
+SurvMapper(data, fills, long = long, lat = lat, id = id,
+  bground = isEEA, Legend_title, col_scale, fill_levels = NULL,
   reverse_colours = FALSE)
 }
 \arguments{
-\item{data}{Your spatial data that you want to map, currently only chloropleth available}
+\item{data}{Your spatial data that you want to map, prepared to work with ggplot2, currently only chloropleth available}
 
 \item{fills}{Your column/variable(s) that your want to map. Preferably a factor in defined order.}
 
@@ -17,13 +17,11 @@ SurvMapper(data, fills, long = long, lat = lat, id = id, isEEA = isEEA,
 
 \item{lat}{Your latitude variable, defaults to 'lat'}
 
-\item{id}{Your id variable, defaults to 'id'}
+\item{id}{Your spatial id variable, defaults to 'id'}
 
-\item{isEEA}{Your isEEA variable, defaults to 'isEEA'}
+\item{bground}{Your variable with 1/0 to classify the grey background (0's included only in lightgrey), defaults to 'isEEA'}
 
-\item{CNTR_ID}{Your CNTR_ID variable, defaults to 'CNTR_ID'}
-
-\item{Legend_titles}{Legend title(s). More than one if more than one fills.}
+\item{Legend_title}{Legend title(s). More than one if more than one fills.}
 
 \item{col_scale}{Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" grey.
 More than one if more than one fills.}
@@ -33,7 +31,7 @@ More than one if more than one fills.}
 \item{reverse_colours}{Reverse the order of the colour scale. Note that the last category is always "No data" grey.}
 }
 \description{
-Creates surveillance chloropleth maps. Note that due to the use of grid for legend and the small inlets for non-visible 
+Creates surveillance chloropleth maps for data prepared with PrepMap. Note that due to the use of grid for legend and the small inlets for non-visible 
 countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
 as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
 Currently uses 'Arial' font, to be updated to 'Tahoma'.
@@ -42,8 +40,8 @@ Currently uses 'Arial' font, to be updated to 'Tahoma'.
 
 # load the included dummy data
 load(system.file("extdata", "dummy_data.rds", package = "SurvMaps"))
-# load the included EU/EEA SpatialPolygonsDataframe (includes Asia and Africa for background)
-load(system.file("extdata", "EU_AFR_AS_plgs.rds", package = "SurvMaps"))
+# Get the EU/EEA and candidate country SpatialPolygonsDataframe, including a variable "isEEA"
+plg_map <- get_GEO_data(layer = 1, STAT_LEVL = c(0), FIELDS = c("isEEA", "GEO_ID"))
 
 # Prepare the data for SurvMapper with PrepMap
 mymap <- PrepMap(data = dummy_data , geo = plg_map)
@@ -52,10 +50,10 @@ mymap <- PrepMap(data = dummy_data , geo = plg_map)
 dev.new(width=11.8,height=8, noRStudioGD = TRUE)
 
 # Simple chloropleth map
-SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this", col_scale = "red")
+SurvMapper(mymap, fills ="Dummy_status", Legend_title = "Testing this", col_scale = "red")
 
 # Chloropleth map with some additional options
-SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this", 
+SurvMapper(mymap, fills ="Dummy_status", Legend_title = "Testing this", 
        fill_levels = c("Dummy1",
                        "Dummy2",
                        "Dummy3", 
@@ -65,7 +63,7 @@ SurvMapper(mymap, fills ="Dummy_status", Legend_titles = "Testing this",
 
 # Note that you can map at once several columns, but all options are not yet available for this scenario - 
 # e.g. level order is good to be predefined if plotting several columns. And depends on graphical device (e.g. recording)
-SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_titles = c("Testing this", "And also this"),
+SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_title = c("Testing this", "And also this"),
        col_scale = c("blue", "qualitative"))
 }
 \author{
