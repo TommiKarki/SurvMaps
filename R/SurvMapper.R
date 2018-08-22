@@ -78,7 +78,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
       map_cols <- SurvColors(col_scale = "qualitative", n=length(levels(data[[fill]])))
       map_cols[length(levels(data[[fill]]))] <- SurvColors("grey", grey_shade = "mediumlight")
     }else if(colour_scale=="hotcold"){
-      map_cols <- SurvColors(col_scale = "hotcold", n=length(levels(data[[fill]])), hot_cols = 3)
+      map_cols <- SurvColors(col_scale = "hotcold", n=length(levels(data[[fill]])))
       map_cols[length(levels(data[[fill]]))] <- SurvColors("grey", grey_shade = "mediumlight")
     }else{
       map_cols <- map_cols
