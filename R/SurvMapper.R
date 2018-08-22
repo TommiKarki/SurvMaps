@@ -53,7 +53,7 @@ SurvMapper <- function(data, fills, long = "long", lat = "lat", id = "id", GEO_I
                     Legend_title, col_scale,
                     fill_levels = NULL, reverse_colours=FALSE){
   windowsFonts(Arial = windowsFont("TT Arial"))
-  require(SurvColors)
+  require(EcdcColors)
   for(i in fills){
     fill <- i
     Leg_title <- Legend_title[fills==i]
