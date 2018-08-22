@@ -5,8 +5,8 @@
 \title{Map your prepared data with SurvMapper}
 \usage{
 SurvMapper(data, fills, long = long, lat = lat, id = id,
-  bground = isEEA, Legend_title, col_scale, fill_levels = NULL,
-  reverse_colours = FALSE)
+  GEO_ID = GEO_ID, bground = isEEA, Legend_title, col_scale,
+  fill_levels = NULL, reverse_colours = FALSE)
 }
 \arguments{
 \item{data}{Your spatial data that you want to map, prepared to work with ggplot2, currently only chloropleth available}
@@ -18,6 +18,8 @@ SurvMapper(data, fills, long = long, lat = lat, id = id,
 \item{lat}{Your latitude variable, defaults to 'lat'}
 
 \item{id}{Your spatial id variable, defaults to 'id'}
+
+\item{GEO_ID}{Your spatial id variable (e.g. country code), defaults to 'GEO_ID'}
 
 \item{bground}{Your variable with 1/0 to classify the grey background (0's included only in lightgrey), defaults to 'isEEA'}
 
