@@ -49,11 +49,9 @@
 #' # e.g. level order is good to be predefined if plotting several columns. And depends on graphical device (e.g. recording)
 #' SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_title = c("Testing this", "And also this"),
 #'        col_scale = c("blue", "qualitative"))
-SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GEO_ID, bground = isEEA,
+SurvMapper <- function(data, fills, long = "long", lat = "lat", id = "id", GEO_ID = "GEO_ID", bground = "isEEA",
                     Legend_title, col_scale,
                     fill_levels = NULL, reverse_colours=FALSE){
-  bground <- deparse(substitute(bground))
-  GEO_ID <- deparse(substitute(GEO_ID))
   windowsFonts(Arial = windowsFont("TT Arial"))
   require(SurvColors)
   for(i in fills){
@@ -92,16 +90,16 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     
     # The main map without any legend (added using grid below - 
     # unfortunately a bit manual but allows more control)
-    p1 <- ggplot(data = data, aes_string(x = "long", y = "lat", fill = fill)) +
+    p1 <- ggplot(data = data, aes_string(x = long, y = lat, fill = fill)) +
       geom_map(data = data, map = data,
-               aes_string(map_id = "id"),
+               aes_string(map_id = id),
                color = SurvColors("grey", grey_shade="dark"), size = 0.2) +
       theme_map() +
       coord_map("azequalarea", xlim = c(-24, 44),ylim = c(34, 70),
                 orientation = c(52,10,0)) +
       theme(legend.position="none") +
       geom_map(data = data[data[[bground]]==0,], map = data[data[[bground]]==0,],
-               aes_string(map_id = "id"),
+               aes_string(map_id = id),
                fill = SurvColors("grey", grey_shade="light"),
                color = SurvColors("grey", grey_shade="dark"), size = 0.2) 
     if(length(levels(data[[fill]])) == 2){
