@@ -77,15 +77,21 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     }else if(colour_scale=="qualitative"){
       map_cols <- SurvColors(col_scale = "qualitative", n=length(levels(data[[fill]])))
       map_cols[length(levels(data[[fill]]))] <- SurvColors("grey", grey_shade = "mediumlight")
+    }else if(colour_scale=="hotcold"){
+      map_cols <- SurvColors(col_scale = "hotcold", n=length(levels(data[[fill]])), hot_cols = 3)
+      map_cols[length(levels(data[[fill]]))] <- SurvColors("grey", grey_shade = "mediumlight")
     }else{
-      stop("Specify the colours as 'qualitative', 'green', 'blue' or 'red'!")}
+      map_cols <- map_cols
+      map_cols[length(levels(data[[fill]]))] <- SurvColors("grey", grey_shade = "mediumlight")
+    }
     
     if(reverse_colours==TRUE){
       map_cols[1:length(map_cols)-1] <- rev(map_cols[1:length(map_cols)-1])
     }
+    # map_cols2 <- map_cols
     
-    
-    # The main map without any legend (added using grid below - unfortunately a bit manual but allows more control)
+    # The main map without any legend (added using grid below - 
+    # unfortunately a bit manual but allows more control)
     p1 <- ggplot(data = data, aes_string(x = "long", y = "lat", fill = fill)) +
       geom_map(data = data, map = data,
                aes_string(map_id = "id"),
@@ -114,9 +120,9 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
       p1 <- p1 + scale_fill_manual(values = map_cols[1:8])
     }
     
-    # printing the map and the legend together
+    # printing the map and the legend together, and adding small rectangles for non-visible countries
     xpos <- 0.01
-    xtextpos <- 0.071
+    xtextpos <- 0.056
     textcex <- 1.5
     grid.newpage()
     v1 <- viewport(width = 1, height = 1) #plot area for the main map
@@ -124,13 +130,13 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     # v3 <- viewport(width = 0.057, x = xpos, y = 0.14, just = "left") #plot area for the inset map MT
     print(p1,vp=v1)
     
-    grid.rect(width = 0.055, height = 0.025, 
+    grid.rect(width = 0.04, height = 0.025, 
               x = xpos+0.002, y=0.9, just = "left", 
               gp = gpar(fill=map_cols[1],
                         col = SurvColors("grey", grey_shade="dark"),
                         lwd = 0.2))
     
-    grid.rect(width = 0.055, height = 0.025, 
+    grid.rect(width = 0.04, height = 0.025, 
               x = xpos+0.002, y=0.865, just = "left", 
               gp = gpar(fill=map_cols[2],
                         col = SurvColors("grey", grey_shade="dark"),
@@ -153,7 +159,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     
     if(length(levels(data[[fill]])) >= 3){
       
-      grid.rect(width = 0.055, height = 0.025, 
+      grid.rect(width = 0.04, height = 0.025, 
                 x = xpos+0.002, y=0.83, just = "left", 
                 gp = gpar(fill=map_cols[3],
                           col = SurvColors("grey", grey_shade="dark"),
@@ -167,7 +173,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     }
     if(length(levels(data[[fill]])) >= 4){
       
-      grid.rect(width = 0.055, height = 0.025, 
+      grid.rect(width = 0.04, height = 0.025, 
                 x = xpos+0.002, y=0.795, just = "left", 
                 gp = gpar(fill=map_cols[4],
                           col = SurvColors("grey", grey_shade="dark"),
@@ -180,7 +186,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     }
     if(length(levels(data[[fill]])) >= 5){
       
-      grid.rect(width = 0.055, height = 0.025, 
+      grid.rect(width = 0.04, height = 0.025, 
                 x = xpos+0.002, y=0.76, just = "left", 
                 gp = gpar(fill=map_cols[5],
                           col = SurvColors("grey", grey_shade="dark"),
@@ -195,7 +201,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     }
     if(length(levels(data[[fill]])) >= 6){
       
-      grid.rect(width = 0.055, height = 0.025, 
+      grid.rect(width = 0.04, height = 0.025, 
                 x = xpos+0.002, y=0.725, just = "left", 
                 gp = gpar(fill=map_cols[6],
                           col = SurvColors("grey", grey_shade="dark"),
@@ -208,7 +214,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     }
     if (length(levels(data[[fill]])) >= 7){
       
-      grid.rect(width = 0.055, height = 0.025, 
+      grid.rect(width = 0.04, height = 0.025, 
                 x = xpos+0.002, y=0.69, just = "left", 
                 gp = gpar(fill=map_cols[7],
                           col = SurvColors("grey", grey_shade="dark"),
@@ -221,7 +227,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     }
     if(length(levels(data[[fill]])) >= 8){
       
-      grid.rect(width = 0.055, height = 0.025, 
+      grid.rect(width = 0.04, height = 0.025, 
                 x = xpos+0.002, y=0.655, just = "left", 
                 gp = gpar(fill=map_cols[8],
                           col = SurvColors("grey", grey_shade="dark"),
@@ -234,7 +240,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
     
     # Add the small inset rectangles for LU and MT
   
-    grid.rect(width = 0.055, height = 0.025, 
+    grid.rect(width = 0.04, height = 0.025, 
               x = xpos+0.002, y=0.55, just = "left", 
               gp = gpar(fill=map_cols[levels(data[[fill]]) == unique(data[[fill]][data[[GEO_ID]]=="LU"])],
                         col = SurvColors("grey", grey_shade="dark"),
@@ -243,7 +249,7 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GE
                                                                                   fontfamily = "Arial",
                                                                                   cex = textcex))
    
-    grid.rect(width = 0.055, height = 0.025, 
+    grid.rect(width = 0.04, height = 0.025, 
               x = xpos+0.002, y=0.515, just = "left", 
               gp = gpar(fill=map_cols[levels(data[[fill]]) == unique(data[[fill]][data[[GEO_ID]]=="MT"])],
                         col = SurvColors("grey", grey_shade="dark"),
