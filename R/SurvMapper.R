@@ -10,6 +10,7 @@
 #' @param long Your longitude variable, defaults to 'long'
 #' @param lat Your latitude variable, defaults to 'lat'
 #' @param id Your spatial id variable, defaults to 'id'
+#' @param GEO_ID Your spatial id variable (e.g. country code), defaults to 'GEO_ID'
 #' @param bground Your variable with 1/0 to classify the grey background (0's included only in lightgrey), defaults to 'isEEA'
 #' @param Legend_title Legend title(s). More than one if more than one fills.
 #' @param col_scale Colour scale, use 'green', 'red', 'blue' or 'qualitative'. Note that the last category is always "No data" grey.
@@ -48,10 +49,11 @@
 #' # e.g. level order is good to be predefined if plotting several columns. And depends on graphical device (e.g. recording)
 #' SurvMapper(mymap, fills = c("Dummy_status", "Dummy2"), Legend_title = c("Testing this", "And also this"),
 #'        col_scale = c("blue", "qualitative"))
-SurvMapper <- function(data, fills, long = long, lat = lat, id = id, bground = isEEA,
+SurvMapper <- function(data, fills, long = long, lat = lat, id = id, GEO_ID = GEO_ID, bground = isEEA,
                     Legend_title, col_scale,
                     fill_levels = NULL, reverse_colours=FALSE){
   bground <- deparse(substitute(bground))
+  GEO_ID <- deparse(substitute(GEO_ID))
   windowsFonts(Arial = windowsFont("TT Arial"))
   require(SurvColors)
   for(i in fills){
@@ -84,7 +86,6 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, bground = i
     
     
     # The main map without any legend (added using grid below - unfortunately a bit manual but allows more control)
-    print("Creating EU/EEA map!")
     p1 <- ggplot(data = data, aes_string(x = "long", y = "lat", fill = fill)) +
       geom_map(data = data, map = data,
                aes_string(map_id = "id"),
@@ -113,76 +114,14 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, bground = i
       p1 <- p1 + scale_fill_manual(values = map_cols[1:8])
     }
     
-    print("Creating Luxembourg inset map!")
-    mymap_lu_mt <- data[data[[bground]]==1,]
-    # mymap_lu_mt <- data[data[["GEO_ID"]]%in%c("LU", "MT", "FR", "BE", "DE"),]
-    mp_lu <- ggplot(data = mymap_lu_mt, aes_string(x = "long", y = "lat", fill = fill)) +
-      geom_map(data = mymap_lu_mt, map = mymap_lu_mt,
-               aes_string(map_id = "id"),
-               color = SurvColors("grey", grey_shade="dark"), size = 0.5) +
-      theme_map() +
-      coord_map("azequalarea", xlim = c(5.59,6.61),ylim = c(49.3, 50.35)) +
-      labs(x=NULL, y=NULL) +
-      theme(legend.position = "none", plot.margin=unit(c(0,0,0,0),"mm"),
-            panel.border = element_rect(fill = NA, colour = SurvColors("grey", grey_shade="dark"), 
-                                        size = 0.5))
-    if(length(levels(data[[fill]])) == 2){
-      mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:2])
-    }else if(length(levels(data[[fill]])) == 3){
-      mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:3])
-    }else if(length(levels(data[[fill]])) == 4){
-      mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:4])
-    }else if(length(levels(data[[fill]])) == 5){
-      mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:5])
-    }else if(length(levels(data[[fill]])) == 6){
-      mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:6])
-    }else if (length(levels(data[[fill]])) == 7){
-      mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:7])
-    }else{
-      mp_lu <- mp_lu + scale_fill_manual(values = map_cols[1:8])
-    }
-    
-    
-    
-    
-    
-    print("Creating Malta inset map!")
-    # Malta inset map
-    mp_mt <- ggplot(data = mymap_lu_mt, aes_string(x = "long", y = "lat", fill = fill)) +
-      geom_map(data = mymap_lu_mt, map = mymap_lu_mt,
-               aes_string(map_id = "id"),
-               color = SurvColors("grey", grey_shade="dark"), size = 0.5) +
-      theme_map() +
-      coord_map("azequalarea",xlim = c(14.1175,14.6375),ylim = c(35.58, 36.32)) +
-      labs(x=NULL, y=NULL) +
-      theme(legend.position = "none", plot.margin=unit(c(0,0,0,0),"mm"),
-            panel.border = element_rect(fill = NA, colour = SurvColors("grey", grey_shade="dark"), 
-                                        size = 0.5))
-    if(length(levels(data[[fill]])) == 2){
-      mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:2])
-    }else if(length(levels(data[[fill]])) == 3){
-      mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:3])
-    }else if(length(levels(data[[fill]])) == 4){
-      mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:4])
-    }else if(length(levels(data[[fill]])) == 5){
-      mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:5])
-    }else if(length(levels(data[[fill]])) == 6){
-      mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:6])
-    }else if (length(levels(data[[fill]])) == 7){
-      mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:7])
-    }else{
-      mp_mt <- mp_mt + scale_fill_manual(values = map_cols[1:8])
-    }
-    
-    
-    print("printing the maps together!")
+    # printing the map and the legend together
     xpos <- 0.01
     xtextpos <- 0.071
     textcex <- 1.5
     grid.newpage()
     v1 <- viewport(width = 1, height = 1) #plot area for the main map
-    v2 <- viewport(width = 0.057, x = xpos, y = 0.26, just = "left") #plot area for the inset map LU
-    v3 <- viewport(width = 0.057, x = xpos, y = 0.14, just = "left") #plot area for the inset map MT
+    # v2 <- viewport(width = 0.057, x = xpos, y = 0.26, just = "left") #plot area for the inset map LU
+    # v3 <- viewport(width = 0.057, x = xpos, y = 0.14, just = "left") #plot area for the inset map MT
     print(p1,vp=v1)
     
     grid.rect(width = 0.055, height = 0.025, 
@@ -293,13 +232,23 @@ SurvMapper <- function(data, fills, long = long, lat = lat, id = id, bground = i
                           cex = textcex))
     }
     
-    # Add the small inset maps for LU and MT
-    print(mp_lu,vp=v2)
-    print(mp_mt,vp=v3)
-    grid.text("Luxembourg", x=xtextpos, y=0.26, just = "left", vp = v1, gp = gpar(fontsize = 9,
+    # Add the small inset rectangles for LU and MT
+  
+    grid.rect(width = 0.055, height = 0.025, 
+              x = xpos+0.002, y=0.55, just = "left", 
+              gp = gpar(fill=map_cols[levels(data[[fill]]) == unique(data[[fill]][data[[GEO_ID]]=="LU"])],
+                        col = SurvColors("grey", grey_shade="dark"),
+                        lwd = 0.2))
+    grid.text("Luxembourg", x=xtextpos, y=0.55, just = "left", vp = v1, gp = gpar(fontsize = 9,
                                                                                   fontfamily = "Arial",
                                                                                   cex = textcex))
-    grid.text("Malta", x=xtextpos, y=0.14, just = "left", vp = v1, gp = gpar(fontsize = 9,
+   
+    grid.rect(width = 0.055, height = 0.025, 
+              x = xpos+0.002, y=0.515, just = "left", 
+              gp = gpar(fill=map_cols[levels(data[[fill]]) == unique(data[[fill]][data[[GEO_ID]]=="MT"])],
+                        col = SurvColors("grey", grey_shade="dark"),
+                        lwd = 0.2))
+    grid.text("Malta", x=xtextpos, y=0.515, just = "left", vp = v1, gp = gpar(fontsize = 9,
                                                                              fontfamily = "Arial",
                                                                              cex = textcex))
     
