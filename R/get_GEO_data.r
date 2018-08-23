@@ -6,6 +6,8 @@
 #' @param FIELDS Which data fields to retrieve from the hybrid layer; see details. Defaults to "GEO_ID".
 #' Give a single value or character vector of relevant field names.
 #' @param isValid isValid=1 removes the obsolete NUTS regions.
+#' @param eu_surround_continents TRUE selects the polygons for Europe, Asia and Africa (if adequate STAT_LEVL selected), 
+#' to allow mapping European mainland with the surrounding background of Asia and Northern Africa. Requires clipping as e.g. per the SurvMapper.
 #' @details STAT_LEVL; 0 for EU/EEA and candidate country level, 10 for the rest of world country level. 
 #' 1,2,3 = NUTS levels; 11,12 = GAUL levels; 21,22,23,24 = GADM levels. 
 #' FIELDS; for additional fields to retrieve from the hybrid lay, see:
@@ -25,11 +27,16 @@
 #' 
 #' # get all the world country polygons and some additional fields
 #' plgs <- get_GEO_data(layer = 1, FIELDS = c("GEO_ID", "GEO_NAME", "CONTINENT"), STAT_LEVL=c(0,10))
+#' 
+#' #' # get all Europe, Asia and Africa polygons and some additional fields
+#' plgs <- get_GEO_data(layer = 1, FIELDS = c("GEO_ID", "GEO_NAME", "CONTINENT"), STAT_LEVL=c(0,10),
+#' eu_surround_continents = TRUE)
 
 get_GEO_data <- function(layer,
                               STAT_LEVL = c(0),
                               FIELDS = "GEO_ID",
-                              isValid=1){
+                              isValid=1,
+                         eu_surround_continents = FALSE){
 
 # ECDC GIS server url
 url_ecdcGisSrv <- "https://gis.ecdc.europa.eu/1/query"
@@ -38,8 +45,13 @@ url_srvcLocation <-
 url_layer <- layer
 url_outFields <- paste(FIELDS, collapse= ",")
 STAT_LEVL <- paste(STAT_LEVL, collapse = ",")
-url_whereClause <- paste0("isValid=",isValid, " AND STAT_LEVL IN (", STAT_LEVL,")")
-
+if(!eu_surround_continents){
+  url_whereClause <- paste0("isValid=", isValid, " AND STAT_LEVL IN (", 
+                            STAT_LEVL, ")")
+}else{
+  url_whereClause <- paste0("isValid=", isValid, " AND STAT_LEVL IN (", 
+                            STAT_LEVL, ")", "AND CONTINENT IN ('Europe', 'Asia', 'Africa')")
+}
 # The full url with the layer and where-clause
 url_full <- modify_url(url_ecdcGisSrv, 
                        path = list(url_srvcLocation, url_layer, "query"), 
