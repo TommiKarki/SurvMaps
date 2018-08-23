@@ -97,7 +97,8 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
                                                            grey_shade = "mediumlight")
     }
     else if (colour_scale == "hotcold") {
-      map_cols <- SurvColors(col_scale = "hotcold", n = length(levels(data[[fill]])))
+      map_cols <- SurvColors(col_scale = "hotcold", n = length(levels(data[[fill]]))- 
+                               1)
       map_cols[length(map_cols) + 1] <- SurvColors("grey", 
                                                            grey_shade = "mediumlight")
     }
