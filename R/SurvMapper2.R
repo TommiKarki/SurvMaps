@@ -77,50 +77,38 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
                                1)
       map_cols[length(map_cols) + 1] <- SurvColors("grey", 
                                                    grey_shade = "mediumlight")
-      # map_cols[length(map_cols) + 1] <- SurvColors("grey", 
-      #                                              grey_shade = "light")
     }
     else if (colour_scale == "blue") {
       map_cols <- SurvColors(col_scale = "blue", n = length(levels(data[[fill]])) - 
                                1)
       map_cols[length(map_cols) + 1] <- SurvColors("grey", 
                                                    grey_shade = "mediumlight")
-      map_cols[length(map_cols) + 1] <- SurvColors("grey", 
-                                                   grey_shade = "light")
     }
     else if (colour_scale == "red") {
       map_cols <- SurvColors(col_scale = "red", n = length(levels(data[[fill]])) - 
                                1)
       map_cols[length(map_cols) + 1] <- SurvColors("grey", 
                                                    grey_shade = "mediumlight")
-      map_cols[length(map_cols) + 1] <- SurvColors("grey", 
-                                                             grey_shade = "light")
     }
     else if (colour_scale == "qualitative") {
       map_cols <- SurvColors(col_scale = "qualitative", 
                              n = length(levels(data[[fill]]))-1)
       map_cols[length(map_cols) + 1] <- SurvColors("grey", 
                                                            grey_shade = "mediumlight")
-      map_cols[length(map_cols) + 1] <- SurvColors("grey", 
-                                                             grey_shade = "light")
     }
     else if (colour_scale == "hotcold") {
       map_cols <- SurvColors(col_scale = "hotcold", n = length(levels(data[[fill]])))
       map_cols[length(map_cols) + 1] <- SurvColors("grey", 
                                                            grey_shade = "mediumlight")
-      map_cols[length(map_cols) + 1] <- SurvColors("grey", 
-                                                           grey_shade = "light")
     }
     else {
       map_cols <- map_cols
       map_cols[length(map_cols) + 1] <- SurvColors("grey", 
                                                            grey_shade = "mediumlight")
-      map_cols[length(map_cols) + 1] <- SurvColors("grey", 
-                                                           grey_shade = "light")
     }
     if (reverse_colours == TRUE) {
-      map_cols[1:length(map_cols) - 2] <- rev(map_cols[1:length(map_cols) - 
-                                                         2])
+      map_cols[1:length(map_cols) - 1] <- rev(map_cols[1:length(map_cols) - 
+                                                         1])
     }
     p1 <- ggplot(data = data, aes_string(x = long, y = lat, 
                                          fill = fill)) + geom_map(data = data, map = data, 
