@@ -157,101 +157,101 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
     v1 <- viewport(width = 1, height = 1)
     print(p1, vp = v1)
     grid.rect(width = 0.04, height = 0.025, x = xpos + 0.002, 
-              y = 0.9, just = "left", gp = gpar(fill = map_cols[1], 
+              y = 0.9-0.03, just = "left", gp = gpar(fill = map_cols[1], 
                                                 col = SurvColors("grey", grey_shade = "dark"), 
                                                 lwd = 0.2))
     grid.rect(width = 0.04, height = 0.025, x = xpos + 0.002, 
-              y = 0.865, just = "left", gp = gpar(fill = map_cols[2], 
+              y = 0.865-0.03, just = "left", gp = gpar(fill = map_cols[2], 
                                                   col = SurvColors("grey", grey_shade = "dark"), 
                                                   lwd = 0.2))
-    grid.text(Leg_title, x = xpos + 0.002, y = 0.93, just = c("left", "bottom"), 
+    grid.text(Leg_title, x = xpos + 0.002, y = 0.93-0.03, just = c("left", "bottom"), 
               vp = v1, gp = gpar(fontsize = 9, fontfamily = "Arial", 
                                  cex = textcex))
     grid.text(paste(nfills[1]), x = xtextpos, 
-              y = 0.9, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+              y = 0.9-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                          fontfamily = "Arial", cex = textcex))
     grid.text(paste(nfills[2]), x = xtextpos, 
-              y = 0.865, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+              y = 0.865-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                            fontfamily = "Arial", cex = textcex))
     if (length(nfills) >= 3) {
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
-                  0.002, y = 0.83, just = "left", gp = gpar(fill = map_cols[3], 
+                  0.002, y = 0.83-0.03, just = "left", gp = gpar(fill = map_cols[3], 
                                                             col = SurvColors("grey", grey_shade = "dark"), 
                                                             lwd = 0.2))
       grid.text(paste(nfills[3]), x = xtextpos, 
-                y = 0.83, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+                y = 0.83-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                             fontfamily = "Arial", cex = textcex))
     }
     if (length(nfills) >= 4) {
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
-                  0.002, y = 0.795, just = "left", gp = gpar(fill = map_cols[4], 
+                  0.002, y = 0.795-0.03, just = "left", gp = gpar(fill = map_cols[4], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
                                                              lwd = 0.2))
       grid.text(paste(nfills[4]), x = xtextpos, 
-                y = 0.795, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+                y = 0.795-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Arial", cex = textcex))
     }
     if (length(nfills) >= 5) {
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
-                  0.002, y = 0.76, just = "left", gp = gpar(fill = map_cols[5], 
+                  0.002, y = 0.76-0.03, just = "left", gp = gpar(fill = map_cols[5], 
                                                             col = SurvColors("grey", grey_shade = "dark"), 
                                                             lwd = 0.2))
       grid.text(paste(nfills[5]), x = xtextpos, 
-                y = 0.76, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+                y = 0.76-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                             fontfamily = "Arial", cex = textcex))
     }
     if (length(nfills) >= 6) {
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
-                  0.002, y = 0.725, just = "left", gp = gpar(fill = map_cols[6], 
+                  0.002, y = 0.725-0.03, just = "left", gp = gpar(fill = map_cols[6], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
                                                              lwd = 0.2))
       grid.text(paste(nfills[6]), x = xtextpos, 
-                y = 0.725, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+                y = 0.725-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Arial", cex = textcex))
     }
     if (length(nfills) >= 7) {
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
-                  0.002, y = 0.69, just = "left", gp = gpar(fill = map_cols[7], 
+                  0.002, y = 0.69-0.03, just = "left", gp = gpar(fill = map_cols[7], 
                                                             col = SurvColors("grey", grey_shade = "dark"), 
                                                             lwd = 0.2))
       grid.text(paste(nfills[7]), x = xtextpos, 
-                y = 0.69, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+                y = 0.69-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                             fontfamily = "Arial", cex = textcex))
     }
     if (length(nfills) >= 8) {
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
-                  0.002, y = 0.655, just = "left", gp = gpar(fill = map_cols[8], 
+                  0.002, y = 0.655-0.03, just = "left", gp = gpar(fill = map_cols[8], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
                                                              lwd = 0.2))
       grid.text(paste(nfills[8]), x = xtextpos, 
-                y = 0.655, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+                y = 0.655-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Arial", cex = textcex))
     }
     
     if (length(nfills) >= 9) {
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
-                  0.002, y = 0.620, just = "left", gp = gpar(fill = map_cols[9], 
+                  0.002, y = 0.620-0.03, just = "left", gp = gpar(fill = map_cols[9], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
                                                              lwd = 0.2))
       grid.text(paste(nfills[9]), x = xtextpos, 
-                y = 0.620, just = "left", vp = v1, gp = gpar(fontsize = 9, 
+                y = 0.620-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Arial", cex = textcex))
     }
     
     grid.rect(width = 0.04, height = 0.025, x = xpos + 0.002, 
-              y = 0.55, just = "left", gp = gpar(fill = map_cols[levels(data[[fill]]) == 
+              y = 0.55-0.03, just = "left", gp = gpar(fill = map_cols[levels(data[[fill]]) == 
                                                                    unique(data[[fill]][data[[GEO_ID]] == "LU"])], 
                                                  col = SurvColors("grey", grey_shade = "dark"), 
                                                  lwd = 0.2))
-    grid.text("Luxembourg", x = xtextpos, y = 0.55, just = "left", 
+    grid.text("Luxembourg", x = xtextpos, y = 0.55-0.03, just = "left", 
               vp = v1, gp = gpar(fontsize = 9, fontfamily = "Arial", 
                                  cex = textcex))
     grid.rect(width = 0.04, height = 0.025, x = xpos + 0.002, 
-              y = 0.515, just = "left", gp = gpar(fill = map_cols[levels(data[[fill]]) == 
+              y = 0.515-0.03, just = "left", gp = gpar(fill = map_cols[levels(data[[fill]]) == 
                                                                     unique(data[[fill]][data[[GEO_ID]] == "MT"])], 
                                                   col = SurvColors("grey", grey_shade = "dark"), 
                                                   lwd = 0.2))
-    grid.text("Malta", x = xtextpos, y = 0.515, just = "left", 
+    grid.text("Malta", x = xtextpos, y = 0.515-0.03, just = "left", 
               vp = v1, gp = gpar(fontsize = 9, fontfamily = "Arial", 
                                  cex = textcex))
   }
