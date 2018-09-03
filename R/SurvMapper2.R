@@ -59,19 +59,25 @@
 SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id", 
           GEO_ID = "GEO_ID", bground = "isEEA", Legend_title, col_scale, 
           fill_levels = NULL, reverse_colours = FALSE, not_included = "Not included",
-          add_points = FALSE, pointdata = NULL) 
+          add_points = FALSE, pointdata = NULL, pointsize = NULL, pointshape = "*") 
 {
+  if(add_points == TRUE & is.null(pointdata)){
+    stop("For adding points to the chloropleth map, please include geometries also for the points!")
+  }
+  
   windowsFonts(Tahoma = windowsFont("Tahoma"))
   require(EcdcColors)
-  for (i in fills) {
-    fill <- i
-    Leg_title <- Legend_title[fills == i]
-    colour_scale <- col_scale[fills == i]
+  # for (i in fills) {
+    fill <- fills
+    Leg_title <- Legend_title
+    colour_scale <- col_scale
     if (is.null(fill_levels)) {
       data[[fill]] <- factor(data[[fill]])
+      pointdata[[fill]] <- factor(pointdata[[fill]])
     }
     else {
       data[[fill]] <- factor(data[[fill]], levels = fill_levels)
+      pointdata[[fill]] <- factor(pointdata[[fill]], levels = fill_levels)
     }
     if (colour_scale == "green") {
       map_cols <- SurvColors(col_scale = "green", n = length(levels(data[[fill]])) - 
@@ -122,30 +128,21 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
                                                                  0, ], aes_string(map_id = id), fill = SurvColors("grey", 
                                                                                                                   grey_shade = "light"), color = SurvColors("grey", 
                                                                                                                                                             grey_shade = "dark"), size = 0.2)
-    if (length(levels(data[[fill]])) == 2) {
-      p1 <- p1 + scale_fill_manual(values = map_cols[1:2])
-    }
-    else if (length(levels(data[[fill]])) == 3) {
-      p1 <- p1 + scale_fill_manual(values = map_cols[1:3])
-    }
-    else if (length(levels(data[[fill]])) == 4) {
-      p1 <- p1 + scale_fill_manual(values = map_cols[1:4])
-    }
-    else if (length(levels(data[[fill]])) == 5) {
-      p1 <- p1 + scale_fill_manual(values = map_cols[1:5])
-    }
-    else if (length(levels(data[[fill]])) == 6) {
-      p1 <- p1 + scale_fill_manual(values = map_cols[1:6])
-    }
-    else if (length(levels(data[[fill]])) == 7) {
-      p1 <- p1 + scale_fill_manual(values = map_cols[1:7])
-    }
-    else {
-      p1 <- p1 + scale_fill_manual(values = map_cols[1:8])
+    if (length(levels(data[[fill]])) < 9) {
+      p1 <- p1 + scale_fill_manual(values = map_cols[1:length(levels(data[[fill]]))])
+    }else {
+      stop("Too many categories for the map, please re-check and rescale!")
     }
     
+    print(map_cols[1:length(levels(data[[fill]]))])
+    print(map_cols[1:length(levels(pointdata[[fill]]))])
+    print(unlist(lapply(map_cols, function(x) ifelse( mean(col2rgb(x)) >  100, "black", "white"))))
+    
+    # This needs to somehow match the levels that exist for point with the levels for the polygons, in this case -
+    # not completely working yet! Cutoff around 90 for rgb works nice though.
     if(add_points == TRUE){
-      p1 <- p1 + geom_point(data=pointdata, aes(x=long, y=lat),size=1)
+      p1 <- p1 + geom_point(data=pointdata, aes_string(x="coords.x1", y="coords.x2", col = fills),size=6, shape = pointshape)+
+        scale_color_manual(values = unlist(lapply(map_cols[1:length(levels(data[[fill]]))], function(x) ifelse( mean(col2rgb(x)) >  100, "black", "white"))))
     }
     
     if(!is.null(not_included)){
@@ -249,6 +246,14 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
                                                                    unique(data[[fill]][data[[GEO_ID]] == "LU"])], 
                                                  col = SurvColors("grey", grey_shade = "dark"), 
                                                  lwd = 0.2))
+    if(add_points == TRUE){
+    grid.text("*", x = xtextpos-0.03, y = 0.55-0.035, just = "left", 
+              vp = v1, gp = gpar(fontsize = 12, fontfamily = "Tahoma", 
+                                 cex = textcex, col = 
+                                   ifelse(mean(col2rgb(map_cols[levels(data[[fill]]) == 
+                                                                                     unique(data[[fill]][data[[GEO_ID]] == "LU"])])) >  100,
+                                          "black", "white")))
+    }
     grid.text("Luxembourg", x = xtextpos, y = 0.55-0.03, just = "left", 
               vp = v1, gp = gpar(fontsize = 9, fontfamily = "Tahoma", 
                                  cex = textcex))
@@ -257,8 +262,23 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
                                                                     unique(data[[fill]][data[[GEO_ID]] == "MT"])], 
                                                   col = SurvColors("grey", grey_shade = "dark"), 
                                                   lwd = 0.2))
+    
+    print(map_cols[levels(data[[fill]]) == 
+                     unique(data[[fill]][data[[GEO_ID]] == "MT"])])
+    print(ifelse(mean(col2rgb(map_cols[levels(data[[fill]]) == 
+                                   unique(data[[fill]][data[[GEO_ID]] == "MT"])])) >  100,
+           "black", "white"))
+    if(add_points == TRUE){
+      grid.text("*", x = xtextpos-0.03, y = 0.515-0.035, just = "left", 
+                vp = v1, gp = gpar(fontsize = 12, fontfamily = "Tahoma", 
+                                   cex = textcex, col = 
+                                     ifelse(mean(col2rgb(map_cols[levels(data[[fill]]) == 
+                                                                    unique(data[[fill]][data[[GEO_ID]] == "MT"])])) >  100,
+                                            "black", "white")))
+    }
+    
     grid.text("Malta", x = xtextpos, y = 0.515-0.03, just = "left", 
               vp = v1, gp = gpar(fontsize = 9, fontfamily = "Tahoma", 
                                  cex = textcex))
-  }
+  # }
 }

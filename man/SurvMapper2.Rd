@@ -7,7 +7,8 @@
 SurvMapper2(data, fills, long = "long", lat = "lat", id = "id",
   GEO_ID = "GEO_ID", bground = "isEEA", Legend_title, col_scale,
   fill_levels = NULL, reverse_colours = FALSE,
-  not_included = "Not included")
+  not_included = "Not included", add_points = FALSE,
+  pointdata = NULL, pointsize = NULL, pointshape = "*")
 }
 \arguments{
 \item{data}{Your spatial data that you want to map, prepared to work with ggplot2, currently only chloropleth available}
@@ -40,7 +41,7 @@ Use NULL to omit the "Not included" category from the legend.}
 Later version of SurvMapper. Creates surveillance chloropleth maps for data prepared with PrepMap. Note that due to the use of grid for legend and the small inlets for non-visible 
 countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
 as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
-Currently uses 'Arial' font, to be updated to 'Tahoma', best used with get_GEO_data and PrepMap, i.e. geographical data predefined
+Currently uses 'Tahoma' font, but needs care with the registration of fonts with extrafont. Map function best used with get_GEO_data and PrepMap, i.e. geographical data predefined
 in a certain way.
 }
 \examples{
