@@ -58,7 +58,8 @@
 
 SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id", 
           GEO_ID = "GEO_ID", bground = "isEEA", Legend_title, col_scale, 
-          fill_levels = NULL, reverse_colours = FALSE, not_included = "Not included") 
+          fill_levels = NULL, reverse_colours = FALSE, not_included = "Not included",
+          add_points = FALSE, pointdata = NULL) 
 {
   windowsFonts(Tahoma = windowsFont("Tahoma"))
   require(EcdcColors)
@@ -141,6 +142,10 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
     }
     else {
       p1 <- p1 + scale_fill_manual(values = map_cols[1:8])
+    }
+    
+    if(add_points == TRUE){
+      p1 <- p1 + geom_point(data=pointdata, aes(x=long, y=lat),size=1)
     }
     
     if(!is.null(not_included)){
