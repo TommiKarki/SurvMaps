@@ -17,8 +17,12 @@
 #' More than one if more than one fills.
 #' @param fill_levels The order to map the levels in fills; only works with one fills variable.
 #' @param reverse_colours Reverse the order of the colour scale. Note that the last category/ies are always "No data" and "Not included" grey (the latter can be omitted).
-#' @param not_included Label for the background colour category for the legend, defaults to "Not included". 
-#' Use NULL to omit the "Not included" category from the legend.
+#' @param not_included Label for the background colour category for the legend, defaults to "Not included". Use NULL to omit the "Not included" category from the legend.
+#' @param add_points Add point data on the map, defaults to FALSE
+#' @param pointdata If adding the point data, give the points.
+#' @param pointsize If adding points, give the point size
+#' @param pointshape If adding points, give the symbol for points (pch)
+#' @param cex_factor Cex factor for many things, changes sizes depending on the end resolution
 #' @keywords map
 #' @author Tommi Karki
 #' @export
@@ -261,11 +265,6 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
                                                   col = SurvColors("grey", grey_shade = "dark"), 
                                                   lwd = lwd))
     
-    print(map_cols[levels(data[[fill]]) == 
-                     unique(data[[fill]][data[[GEO_ID]] == "MT"])])
-    print(ifelse(mean(col2rgb(map_cols[levels(data[[fill]]) == 
-                                   unique(data[[fill]][data[[GEO_ID]] == "MT"])])) >  100,
-           "black", "white"))
     if(add_points == TRUE){
       grid.text("*", x = xtextpos-0.03, y = 0.515-0.0375, just = "left", 
                 vp = v1, gp = gpar(fontsize = 12, fontfamily = "sans",
