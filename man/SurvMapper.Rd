@@ -4,8 +4,8 @@
 \alias{SurvMapper}
 \title{Map your prepared data with SurvMapper}
 \usage{
-SurvMapper(data, fills, long = long, lat = lat, id = id,
-  GEO_ID = GEO_ID, bground = isEEA, Legend_title, col_scale,
+SurvMapper(data, fills, long = "long", lat = "lat", id = "id",
+  GEO_ID = "GEO_ID", bground = "isEEA", Legend_title, col_scale,
   fill_levels = NULL, reverse_colours = FALSE)
 }
 \arguments{

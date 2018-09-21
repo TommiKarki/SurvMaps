@@ -2,4 +2,5 @@
 
 export(PrepMap)
 export(SurvMapper)
+export(SurvMapper2)
 export(get_GEO_data)

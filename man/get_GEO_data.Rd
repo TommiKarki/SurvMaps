@@ -4,7 +4,8 @@
 \alias{get_GEO_data}
 \title{Get GEO data from ECDC GIS server}
 \usage{
-get_GEO_data(layer, STAT_LEVL = c(0), FIELDS = "GEO_ID", isValid = 1)
+get_GEO_data(layer, STAT_LEVL = c(0), FIELDS = "GEO_ID", isValid = 1,
+  eu_surround_continents = FALSE)
 }
 \arguments{
 \item{layer}{Select the layer for Hybrid Layer service: 0 for Points, 1 for Polygons.}
@@ -15,6 +16,9 @@ get_GEO_data(layer, STAT_LEVL = c(0), FIELDS = "GEO_ID", isValid = 1)
 Give a single value or character vector of relevant field names.}
 
 \item{isValid}{isValid=1 removes the obsolete NUTS regions.}
+
+\item{eu_surround_continents}{TRUE selects the polygons for Europe, Asia and Africa (if adequate STAT_LEVL selected), 
+to allow mapping European mainland with the surrounding background of Asia and Northern Africa. Requires clipping as e.g. per the SurvMapper.}
 }
 \description{
 This function gets the geodata from ECDC GIS server into R SpatialpolygonsDataFrame or SpatialpointsDataFrame.
@@ -38,6 +42,10 @@ plot(plgs, add = TRUE)
 
 # get all the world country polygons and some additional fields
 plgs <- get_GEO_data(layer = 1, FIELDS = c("GEO_ID", "GEO_NAME", "CONTINENT"), STAT_LEVL=c(0,10))
+
+#' # get all Europe, Asia and Africa polygons and some additional fields
+plgs <- get_GEO_data(layer = 1, FIELDS = c("GEO_ID", "GEO_NAME", "CONTINENT"), STAT_LEVL=c(0,10),
+eu_surround_continents = TRUE)
 }
 \author{
 Tommi Karki, with thanks to Silviu Ionescu.
