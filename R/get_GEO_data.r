@@ -6,6 +6,7 @@
 #' @param FIELDS Which data fields to retrieve from the hybrid layer; see details. Defaults to "GEO_ID".
 #' Give a single value or character vector of relevant field names.
 #' @param isValid isValid=1 removes the obsolete NUTS regions.
+#' @param simple Read the geodata as simple features, defaults to FALSE.
 #' @param eu_surround_continents TRUE selects the polygons for Europe, Asia and Africa (if adequate STAT_LEVL selected), 
 #' to allow mapping European mainland with the surrounding background of Asia and Northern Africa. Requires clipping as e.g. per the SurvMapper.
 #' @details STAT_LEVL; 0 for EU/EEA and candidate country level, 10 for the rest of world country level. 
@@ -36,6 +37,7 @@ get_GEO_data <- function(layer,
                               STAT_LEVL = c(0),
                               FIELDS = "GEO_ID",
                               isValid=1,
+                         simple = FALSE,
                          eu_surround_continents = FALSE){
 
 # ECDC GIS server url
@@ -57,7 +59,10 @@ url_full <- modify_url(url_ecdcGisSrv,
                        path = list(url_srvcLocation, url_layer, "query"), 
                        query = list(where = url_whereClause, outFields=url_outFields,
                                     f= "geojson"))
-suppressWarnings(gjson_data <- geojson_sp(geo_pretty(as.geojson(Dump_From_GeoJson(url_full)))))
-
+if(!simple){
+  suppressWarnings(gjson_data <- geojson_sp(geo_pretty(as.geojson(Dump_From_GeoJson(url_full)))))
+}else{
+  suppressWarnings(gjson_data <- geojson_sf(geo_pretty(as.geojson(Dump_From_GeoJson(url_full)))))
+}
 return(gjson_data)
 }

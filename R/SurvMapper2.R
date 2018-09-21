@@ -1,9 +1,8 @@
 #' Map your prepared data with SurvMapper2
 #'
 #' Later version of SurvMapper. Creates surveillance chloropleth maps for data prepared with PrepMap. Note that due to the use of grid for legend and the small inlets for non-visible 
-#' countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
-#' as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
-#' Currently uses 'Tahoma' font, but needs care with the registration of fonts with extrafont. Map function best used with get_GEO_data and PrepMap, i.e. geographical data predefined
+#' countries, mapping is not superswift and elements appear one by one to the graph.
+#' Currently uses 'Tahoma' font, but needs care with the registration of fonts with extrafont, and not perhaps ideal. Map function best used with get_GEO_data and PrepMap, i.e. geographical data predefined
 #' in a certain way.
 #'
 #' @param data Your spatial data that you want to map, prepared to work with ggplot2, currently only chloropleth available
@@ -59,7 +58,8 @@
 SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id", 
           GEO_ID = "GEO_ID", bground = "isEEA", Legend_title, col_scale, 
           fill_levels = NULL, reverse_colours = FALSE, not_included = "Not included",
-          add_points = FALSE, pointdata = NULL, pointsize = NULL, pointshape = "*") 
+          add_points = FALSE, pointdata = NULL, pointsize = NULL, pointshape = "*",
+          cex_factor = 1) 
 {
   if(add_points == TRUE & is.null(pointdata)){
     stop("For adding points to the chloropleth map, please include geometries also for the points!")
@@ -134,14 +134,11 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       stop("Too many categories for the map, please re-check and rescale!")
     }
     
-    print(map_cols[1:length(levels(data[[fill]]))])
-    print(map_cols[1:length(levels(pointdata[[fill]]))])
-    print(unlist(lapply(map_cols, function(x) ifelse( mean(col2rgb(x)) >  100, "black", "white"))))
     
     # This needs to somehow match the levels that exist for point with the levels for the polygons, in this case -
     # not completely working yet! Cutoff around 90 for rgb works nice though.
     if(add_points == TRUE){
-      p1 <- p1 + geom_point(data=pointdata, aes_string(x="coords.x1", y="coords.x2", col = fills),size=6, shape = pointshape)+
+      p1 <- p1 + geom_point(data=pointdata, aes_string(x="coords.x1", y="coords.x2", col = fills),size = 8*cex_factor, shape = pointshape)+
         scale_color_manual(values = unlist(lapply(map_cols[1:length(levels(data[[fill]]))], function(x) ifelse( mean(col2rgb(x)) >  100, "black", "white"))))
     }
     
@@ -155,18 +152,19 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
     }
     xpos <- 0.01
     xtextpos <- 0.056
-    textcex <- 1.5
+    textcex <- 2*cex_factor
+    lwd <- 1*cex_factor
     grid.newpage()
     v1 <- viewport(width = 1, height = 1)
     print(p1, vp = v1)
     grid.rect(width = 0.04, height = 0.025, x = xpos + 0.002, 
               y = 0.9-0.03, just = "left", gp = gpar(fill = map_cols[1], 
                                                 col = SurvColors("grey", grey_shade = "dark"), 
-                                                lwd = 0.2))
+                                                lwd = lwd))
     grid.rect(width = 0.04, height = 0.025, x = xpos + 0.002, 
               y = 0.865-0.03, just = "left", gp = gpar(fill = map_cols[2], 
                                                   col = SurvColors("grey", grey_shade = "dark"), 
-                                                  lwd = 0.2))
+                                                  lwd = lwd))
     grid.text(Leg_title, x = xpos + 0.002, y = 0.93-0.03, just = c("left", "bottom"), 
               vp = v1, gp = gpar(fontsize = 9, fontfamily = "Tahoma", 
                                  cex = textcex))
@@ -180,7 +178,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
                   0.002, y = 0.83-0.03, just = "left", gp = gpar(fill = map_cols[3], 
                                                             col = SurvColors("grey", grey_shade = "dark"), 
-                                                            lwd = 0.2))
+                                                            lwd = lwd))
       grid.text(paste(nfills[3]), x = xtextpos, 
                 y = 0.83-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                             fontfamily = "Tahoma", cex = textcex))
@@ -189,7 +187,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
                   0.002, y = 0.795-0.03, just = "left", gp = gpar(fill = map_cols[4], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
-                                                             lwd = 0.2))
+                                                             lwd = lwd))
       grid.text(paste(nfills[4]), x = xtextpos, 
                 y = 0.795-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Tahoma", cex = textcex))
@@ -198,7 +196,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
                   0.002, y = 0.76-0.03, just = "left", gp = gpar(fill = map_cols[5], 
                                                             col = SurvColors("grey", grey_shade = "dark"), 
-                                                            lwd = 0.2))
+                                                            lwd = lwd))
       grid.text(paste(nfills[5]), x = xtextpos, 
                 y = 0.76-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                             fontfamily = "Tahoma", cex = textcex))
@@ -207,7 +205,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
                   0.002, y = 0.725-0.03, just = "left", gp = gpar(fill = map_cols[6], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
-                                                             lwd = 0.2))
+                                                             lwd = lwd))
       grid.text(paste(nfills[6]), x = xtextpos, 
                 y = 0.725-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Tahoma", cex = textcex))
@@ -216,7 +214,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
                   0.002, y = 0.69-0.03, just = "left", gp = gpar(fill = map_cols[7], 
                                                             col = SurvColors("grey", grey_shade = "dark"), 
-                                                            lwd = 0.2))
+                                                            lwd = lwd))
       grid.text(paste(nfills[7]), x = xtextpos, 
                 y = 0.69-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                             fontfamily = "Tahoma", cex = textcex))
@@ -225,7 +223,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
                   0.002, y = 0.655-0.03, just = "left", gp = gpar(fill = map_cols[8], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
-                                                             lwd = 0.2))
+                                                             lwd = lwd))
       grid.text(paste(nfills[8]), x = xtextpos, 
                 y = 0.655-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Tahoma", cex = textcex))
@@ -235,7 +233,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
       grid.rect(width = 0.04, height = 0.025, x = xpos + 
                   0.002, y = 0.620-0.03, just = "left", gp = gpar(fill = map_cols[9], 
                                                              col = SurvColors("grey", grey_shade = "dark"), 
-                                                             lwd = 0.2))
+                                                             lwd = lwd))
       grid.text(paste(nfills[9]), x = xtextpos, 
                 y = 0.620-0.03, just = "left", vp = v1, gp = gpar(fontsize = 9, 
                                                              fontfamily = "Tahoma", cex = textcex))
@@ -245,10 +243,10 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
               y = 0.55-0.03, just = "left", gp = gpar(fill = map_cols[levels(data[[fill]]) == 
                                                                    unique(data[[fill]][data[[GEO_ID]] == "LU"])], 
                                                  col = SurvColors("grey", grey_shade = "dark"), 
-                                                 lwd = 0.2))
+                                                 lwd = lwd))
     if(add_points == TRUE){
-    grid.text("*", x = xtextpos-0.03, y = 0.55-0.035, just = "left", 
-              vp = v1, gp = gpar(fontsize = 12, fontfamily = "Tahoma", 
+    grid.text("*", x = xtextpos-0.03, y = 0.55-0.0375, just = "left", 
+              vp = v1, gp = gpar(fontsize = 12, fontfamily = "sans",
                                  cex = textcex, col = 
                                    ifelse(mean(col2rgb(map_cols[levels(data[[fill]]) == 
                                                                                      unique(data[[fill]][data[[GEO_ID]] == "LU"])])) >  100,
@@ -261,7 +259,7 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
               y = 0.515-0.03, just = "left", gp = gpar(fill = map_cols[levels(data[[fill]]) == 
                                                                     unique(data[[fill]][data[[GEO_ID]] == "MT"])], 
                                                   col = SurvColors("grey", grey_shade = "dark"), 
-                                                  lwd = 0.2))
+                                                  lwd = lwd))
     
     print(map_cols[levels(data[[fill]]) == 
                      unique(data[[fill]][data[[GEO_ID]] == "MT"])])
@@ -269,8 +267,8 @@ SurvMapper2 <- function (data, fills, long = "long", lat = "lat", id = "id",
                                    unique(data[[fill]][data[[GEO_ID]] == "MT"])])) >  100,
            "black", "white"))
     if(add_points == TRUE){
-      grid.text("*", x = xtextpos-0.03, y = 0.515-0.035, just = "left", 
-                vp = v1, gp = gpar(fontsize = 12, fontfamily = "Tahoma", 
+      grid.text("*", x = xtextpos-0.03, y = 0.515-0.0375, just = "left", 
+                vp = v1, gp = gpar(fontsize = 12, fontfamily = "sans",
                                    cex = textcex, col = 
                                      ifelse(mean(col2rgb(map_cols[levels(data[[fill]]) == 
                                                                     unique(data[[fill]][data[[GEO_ID]] == "MT"])])) >  100,
