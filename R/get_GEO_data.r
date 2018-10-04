@@ -1,6 +1,7 @@
 #' Get GEO data from ECDC GIS server
 #'
-#' This function gets the geodata from ECDC GIS server into R SpatialpolygonsDataFrame or SpatialpointsDataFrame.
+#' This function gets the geodata from ECDC GIS server into R SpatialpolygonsDataFrame or SpatialpointsDataFrame,
+#' or to 'simple features'. Allows also limiting to continents visible on the same map with Europe (Asia and Africa).
 #' @param layer Select the layer for Hybrid Layer service: 0 for Points, 1 for Polygons.
 #' @param STAT_LEVL Which data level to choose; see details. Defaults to 0 for EU/EEA. Give a single value or vector.
 #' @param FIELDS Which data fields to retrieve from the hybrid layer; see details. Defaults to "GEO_ID".

@@ -3,7 +3,7 @@
 #' Later version of SurvMapper. Creates surveillance chloropleth maps for data prepared with PrepMap. Note that due to the use of grid for legend and the small inlets for non-visible 
 #' countries, mapping is not superswift and elements appear one by one to the graph.
 #' Currently uses 'Tahoma' font, but needs care with the registration of fonts with extrafont, and not perhaps ideal. Map function best used with get_GEO_data and PrepMap, i.e. geographical data predefined
-#' in a certain way.
+#' in a certain way. Now allows adding points, but these need separate data and do not yet follow "size by" arguments.
 #'
 #' @param data Your spatial data that you want to map, prepared to work with ggplot2, currently only chloropleth available
 #' @param fills Your column/variable(s) that your want to map. Preferably a factor in defined order. 

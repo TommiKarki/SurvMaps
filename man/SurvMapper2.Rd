@@ -8,7 +8,8 @@ SurvMapper2(data, fills, long = "long", lat = "lat", id = "id",
   GEO_ID = "GEO_ID", bground = "isEEA", Legend_title, col_scale,
   fill_levels = NULL, reverse_colours = FALSE,
   not_included = "Not included", add_points = FALSE,
-  pointdata = NULL, pointsize = NULL, pointshape = "*")
+  pointdata = NULL, pointsize = NULL, pointshape = "*",
+  cex_factor = 1)
 }
 \arguments{
 \item{data}{Your spatial data that you want to map, prepared to work with ggplot2, currently only chloropleth available}
@@ -34,15 +35,23 @@ More than one if more than one fills.}
 
 \item{reverse_colours}{Reverse the order of the colour scale. Note that the last category/ies are always "No data" and "Not included" grey (the latter can be omitted).}
 
-\item{not_included}{Label for the background colour category for the legend, defaults to "Not included". 
-Use NULL to omit the "Not included" category from the legend.}
+\item{not_included}{Label for the background colour category for the legend, defaults to "Not included". Use NULL to omit the "Not included" category from the legend.}
+
+\item{add_points}{Add point data on the map, defaults to FALSE}
+
+\item{pointdata}{If adding the point data, give the points.}
+
+\item{pointsize}{If adding points, give the point size}
+
+\item{pointshape}{If adding points, give the symbol for points (pch)}
+
+\item{cex_factor}{Cex factor for many things, changes sizes depending on the end resolution}
 }
 \description{
 Later version of SurvMapper. Creates surveillance chloropleth maps for data prepared with PrepMap. Note that due to the use of grid for legend and the small inlets for non-visible 
-countries, mapping is not superswift and elements appear one by one to the graph. Also, the alignment of the legend, 
-as well as fontsize depends on the width x height. Current ideal dimensions approximately 1000x680.
-Currently uses 'Tahoma' font, but needs care with the registration of fonts with extrafont. Map function best used with get_GEO_data and PrepMap, i.e. geographical data predefined
-in a certain way.
+countries, mapping is not superswift and elements appear one by one to the graph.
+Currently uses 'Tahoma' font, but needs care with the registration of fonts with extrafont, and not perhaps ideal. Map function best used with get_GEO_data and PrepMap, i.e. geographical data predefined
+in a certain way. Now allows adding points, but these need separate data and do not yet follow "size by" arguments.
 }
 \examples{
 
