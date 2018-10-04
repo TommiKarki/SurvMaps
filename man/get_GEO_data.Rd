@@ -23,7 +23,8 @@ Give a single value or character vector of relevant field names.}
 to allow mapping European mainland with the surrounding background of Asia and Northern Africa. Requires clipping as e.g. per the SurvMapper.}
 }
 \description{
-This function gets the geodata from ECDC GIS server into R SpatialpolygonsDataFrame or SpatialpointsDataFrame.
+This function gets the geodata from ECDC GIS server into R SpatialpolygonsDataFrame or SpatialpointsDataFrame,
+or to 'simple features'. Allows also limiting to continents visible on the same map with Europe (Asia and Africa).
 }
 \details{
 STAT_LEVL; 0 for EU/EEA and candidate country level, 10 for the rest of world country level. 
