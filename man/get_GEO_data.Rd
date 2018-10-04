@@ -5,7 +5,7 @@
 \title{Get GEO data from ECDC GIS server}
 \usage{
 get_GEO_data(layer, STAT_LEVL = c(0), FIELDS = "GEO_ID", isValid = 1,
-  eu_surround_continents = FALSE)
+  simple = FALSE, eu_surround_continents = FALSE)
 }
 \arguments{
 \item{layer}{Select the layer for Hybrid Layer service: 0 for Points, 1 for Polygons.}
@@ -16,6 +16,8 @@ get_GEO_data(layer, STAT_LEVL = c(0), FIELDS = "GEO_ID", isValid = 1,
 Give a single value or character vector of relevant field names.}
 
 \item{isValid}{isValid=1 removes the obsolete NUTS regions.}
+
+\item{simple}{Read the geodata as simple features, defaults to FALSE.}
 
 \item{eu_surround_continents}{TRUE selects the polygons for Europe, Asia and Africa (if adequate STAT_LEVL selected), 
 to allow mapping European mainland with the surrounding background of Asia and Northern Africa. Requires clipping as e.g. per the SurvMapper.}
